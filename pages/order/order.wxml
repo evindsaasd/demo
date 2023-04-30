@@ -1,0 +1,106 @@
+<view class="page">
+<!-- 搜索条 -->
+<view class="search">
+    <navigator url="/pages/search/search" class="input jhx_bg1">
+      <image class="icon"></image>
+      <text class="txt jhx_f1">商品搜索</text>
+    </navigator>
+  </view>
+	<view class="body">
+		<!-- 左侧滚动栏 -->
+		<view style='float: left' class='left'>
+			<scroll-view scroll-y scroll-with-animation scroll-left="{{scrollLength}}" class='scrollY'
+				style='height: {{winHeight}}px'>
+				<view class='all clear'>
+					<block wx:key="tabs" wx:for="{{tabs}}">
+						<view bindtap='jumpIndex' data-menuindex='{{index}}' data-ft_id='{{item.id}}'>
+							<view class="text-style {{indexId==index?' activeView':''}}">
+								<text class="{{indexId==index?'active1':''}}">{{item.name}}</text>
+							</view>
+						</view>
+					</block>
+				</view>
+			</scroll-view>
+		</view>
+		<view class="right" style='height: {{winHeight}}rpx;width:calc(100% - 200rpx);'>
+			<scroll-view scroll-y scroll-with-animation scroll-left="{{scrollLength}}" bindscroll="scrollToLeft"
+				scroll-into-view="{{toTitle}}" class='scrollRight' style='height: {{winHeight}}px'>
+				<block wx:key="tabs" wx:for="{{tabs}}" wx:for-item="itemft">
+					<view id="view-{{itemft.id}}">
+						<view class="title" id="title-{{itemft.id}}">{{itemft.name}}</view>
+						<view class="orders" wx:for="{{tabsList}}" wx:for-item="itemf">
+							<view wx:if="{{itemf.categoryId==itemft.id}}"
+								style="height:180rpx;border-bottom:1rpx solid #F0F0F0;width:96%;margin:20rpx auto;">
+								<image src="{{itemf.image}}" bindtap="toDetail" data-id="{{itemf.id}}"
+									data-ft_id="{{itemf.categoryId}}" style="width:160rpx;height:160rpx;float:left;"></image>
+								<view style="width:calc(100% - 180rpx);float:right;height:160rpx;">
+									<view
+										style="height:40rpx;line-height:40rpx;margin-top:5rpx;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+										{{itemf.name}}</view>
+									<view
+										style="height:40rpx;line-height:40rpx;margin-top:15rpx;font-size:24rpx;color:#c2c2c2;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+										{{itemf.description}}</view>
+									<view style="height:40rpx;line-height:40rpx;margin-top:15rpx;">
+										<text style="color:red;">￥{{itemf.price}}</text>
+										<text
+											style="color:#c2c2c2;font-size:24rpx;margin-left:10rpx;text-decoration:line-through;">￥{{itemf.price}}</text>
+										<!-- 加号 -->
+										<image src="../../static/images/add.png" data-id="{{itemf.id}}" bindtap="addCart"
+											style="float:right;height:40rpx;width:40rpx;"></image>
+										<!-- 数量 -->
+										<text style="float:right;height:40rpx;padding:0rpx 10rpx;" class="value"
+											hidden="{{itemf.quantity<=0}}" data-id="{{itemf.id}}"
+											data-num="{{itemf.quantity}}">{{itemf.quantity}}</text>
+										<!-- 减号 -->
+										<image src="../../static/images/reduce.png" hidden="{{itemf.quantity<=0}}"
+											data-id="{{itemf.id}}" bindtap="delCart" style="float:right;height:40rpx;width:40rpx;">
+										</image>
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+				</block>
+			</scroll-view>
+		</view>
+	</view>
+	<!-- 底部下单 -->
+	<view class="bottom_box">
+		<view class="shop_cartBox" bindtap="cascadeToggle">
+			<image class="shopCart_img" src="../../static/images/cart.png"></image>
+		</view>
+		<view class="all_money">总计：{{totalPrice}}元，{{totalNum}}件</view>
+		<view class="choose_ok color-block" bindtap="gotoOrder">下单</view>
+	</view>
+	<!--购物车弹窗  -->
+	<view hidden="{{maskFlag}}" class="modal-mask" bindtap="cascadeToggle"></view>
+	<view animation="{{animationData}}" class="cart_popup">
+		<view class="shopcart_title"><span class="shopcart_close" bindtap="cascadeToggle">返回</span>购物车<span
+				class="shopcart_deleteAll" bindtap="cleanList">清空购物车</span></view>
+		<scroll-view scroll-y style="height:250px;margin-top:35px">
+			<block wx:for="{{cartList}}" wx:key="">
+				<view class="cart_cells" wx:if="{{item.quantity > 0}}">
+					<view class="cells_name"
+						style="font-size:28rpx;color:gray;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"
+						data-index="{{index}}">{{item.name}}</view>
+					<view class="cells_price" data-index="{{index}}">{{item.price}}</view>
+					<view class="price-box">
+						<!-- 减号 -->
+						<image src="../../static/images/reduce.png" hidden="{{item.quantity<=0}}" data-id="{{item.id}}"
+							bindtap="delCart" style="float:right;height:40rpx;width:40rpx;margin-top: 10rpx;"></image>
+						<!-- 数量 -->
+						<text style="float:right;height:40rpx;padding:0rpx 10rpx;margin-top: 10rpx;" class="value"
+							hidden="{{item.quantity<=0}}" data-id="{{item.id}}"
+							data-num="{{item.quantity}}">{{item.quantity}}</text>
+						<!-- 加号 -->
+						<image src="../../static/images/add.png" data-id="{{item.id}}" bindtap="addCart"
+							style="float:right;height:40rpx;width:40rpx;margin-top: 10rpx;"></image>
+					</view>
+					<icon class="shopcart_delete" type="clear" size="18" data-index="{{index}}" data-id="{{item.id}}"
+						bindtap="deleteOne" />
+				</view>
+			</block>
+		</scroll-view>
+	</view>
+</view>
+

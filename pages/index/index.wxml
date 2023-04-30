@@ -1,0 +1,66 @@
+<!-- <import src ="../templates/tuijian/tuijian.wxml"/> -->
+<!--index.wxml-->
+<view class="container">
+<!-- 搜索 -->  
+ <view class="search">
+    <navigator url="/pages/search/search" class="input jhx_bg1">
+      <image class="icon"></image>
+      <text class="txt jhx_f1">商品搜索</text>
+    </navigator>
+  </view>
+  <!-- 轮播图 -->
+  <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+    <swiper-item wx:for="{{banner}}" wx:key="id">
+      <!-- <navigator url="{{item.link}}"> -->
+      <image src="{{item}}" background-size="cover"></image>
+      <!-- </navigator> -->
+    </swiper-item>
+  </swiper>
+<!-- 分类 -->
+  <view class="m-menu jhx_bg0">
+    <navigator hover-class="none" class="item" url="/pages/category/category?id={{item.id}}" wx:for="{{channel}}" wx:key="id">
+      <image mode="aspectFill" src="{{item.iconUrl}}" background-size="cover"></image>
+      <text class="jhx_f2">{{item.name}}</text>
+    </navigator>
+    <navigator hover-class="none" class="item" url="/pages/catalog/catalog" open-type="switchTab">
+      <image mode="aspectFill" src="/static/images/channel_category.png" background-size="cover"></image>
+      <text class="jhx_f2">更多分类</text>
+    </navigator>
+  </view>
+<!-- 商家推荐 -->
+  <view class=".a-section">
+    <view class="h">
+          <text class="txt jhx_f4">商家推荐</text>
+    </view>
+   
+    <!-- 瀑布流布局 -->
+      <!-- <template> -->
+    <!-- <view class="Index"> -->
+        <!-- 瀑布流布局列表 -->    
+        <view class="pubuBox">   
+            <view class="pubuItem">    
+                <view class="item-masonry" wx:for="{{comList}}" wx:for-item="item" wx:for-index="index" wx:key="index"> 
+                <navigator url="/pages/business/business?id={{item.id}}">
+                    <image src="{{item.logo}}" mode="widthFix"></image>
+                    <view class="listtitle"> <!-- 这是没有高度的父盒子（下半部分） -->
+                        <view class="listtitle1">{{ item.description }}</view>
+                        <view class="listtitle2">
+                            {{ item.name }}
+                        </view>
+                        <view class="listtitle3">
+                          {{ item.address }}
+                        </view>
+                    </view>
+                    </navigator>
+                </view>                     
+            </view>       
+        </view>      
+    <!-- </view> -->
+<!-- </template> -->
+  </view>
+</view>
+  
+<coupon-window window='{{window}}' couponList="{{coupon}}" bind:onColse="onColse"></coupon-window>
+
+
+

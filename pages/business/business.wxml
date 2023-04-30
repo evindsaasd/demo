@@ -1,0 +1,28 @@
+<view class="container">
+<!-- 头部 -->
+<view class="color"></view>
+<image  src="{{restaurantMessage.logo}}" background-size="cover" class="img"></image>
+<view class="name">{{restaurantMessage.name}}</view>
+<!-- 信息 -->
+<view class="grey">
+  <!-- 地址 -->
+  <view class="txt-1">
+    <image class="icon" src="/static/images/business-address.png"></image>
+    <text class="txt-3">{{restaurantMessage.address}}</text>
+  </view>
+  <!-- 电话 -->
+  <view class="txt-2">
+    <image class="icon" src="/static/images/business-phone.png"></image>
+    <text class="txt-3">{{restaurantMessage.phone}}</text>
+  </view>
+  </view>
+<!-- 简介 -->
+  <view class="main">
+    <text class="main-txt">店铺简介</text>
+    <text class="main-txt-1">{{restaurantMessage.description}}</text>
+  </view>
+<!-- button -->
+  <navigator url="/pages/order/order?id={{restaurantMessage.id}}">
+    <button class="btn">快看菜单 今天吃什么</button>
+  </navigator>
+</view>
